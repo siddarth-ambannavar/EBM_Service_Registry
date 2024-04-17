@@ -12,7 +12,7 @@
 
 	<groupId>com.wissen.registry</groupId>
 	<artifactId>ServiceRegistry</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>ServiceRegistry</name>
 	<description>Demo project for Spring Boot</description>
 

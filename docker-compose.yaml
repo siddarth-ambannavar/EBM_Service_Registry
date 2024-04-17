@@ -1,0 +1,86 @@
+services:
+  eureka-server:
+    image: vinrusty02/service-registry
+    ports:
+      - "8761:8761"
+    restart: always
+
+  CustomerService:
+    image: customer_image_name
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    environment:
+      EUREKA_DEFAULT_ZONE: "http://eureka-server:8761/eureka"
+    ports:
+      - "8082:8082"
+    restart: on-failure
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://eureka-server:8761/eureka"]
+      interval: 10s
+      retries: 5
+      start_period: 120s
+
+  MeterService:
+    image: meter_image_name
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    environment:
+      EUREKA_DEFAULT_ZONE: "http://eureka-server:8761/eureka"
+    ports:
+      - "8083:8083"
+    restart: on-failure
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://eureka-server:8761/eureka"]
+      interval: 10s
+      retries: 5
+      start_period: 120s
+
+  BillingService:
+    image: billing_image_name
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    environment:
+      EUREKA_DEFAULT_ZONE: "http://eureka-server:8761/eureka"
+    ports:
+      - "8084:8084"
+    restart: on-failure
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://eureka-server:8761/eureka"]
+      interval: 10s
+      retries: 5
+      start_period: 120s
+
+  PaymentService:
+    image: payment_service_name
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    environment:
+      EUREKA_DEFAULT_ZONE: "http://eureka-server:8761/eureka"
+    ports:
+      - "8085:8085"
+    restart: on-failure
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://eureka-server:8761/eureka"]
+      interval: 10s
+      retries: 5
+      start_period: 120s
+
+  ApiGateway:
+    image: api_gateway_image
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    environment:
+      EUREKA_DEFAULT_ZONE: "http://eureka-server:8761/eureka"
+    ports:
+      - "8090:8090"
+    restart: on-failure
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://eureka-server:8761/eureka"]
+      interval: 10s
+      retries: 5
+      start_period: 120s
